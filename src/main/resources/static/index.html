@@ -559,8 +559,92 @@
             display: block;
         }
 
+        /* STATISTICS CARDS */
+        .statistics-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .stat-card, .logout-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .logout-card {
+            border-left-color: #e74c3c;
+        }
+
+        .stat-card h3, .logout-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .logout-card h3 {
+            color: #e74c3c;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-item span {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .stat-item strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .logout-card p {
+            color: #999;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .logout-btn:active {
+            transform: translateY(0);
+        }
+
         /* RESPONSIVE */
         @media (max-width: 768px) {
+            .statistics-content {
+                grid-template-columns: 1fr;
+            }
+
             .container {
                 flex-direction: column;
             }
@@ -677,9 +761,20 @@
                 <!-- ESTADISTICAS SECTION -->
                 <div class="content-section" id="estadisticas-section">
                     <div id="estadisticas-container" class="estadisticas-container">
-                        <div class="empty-state">
-                            <h3>📊 Estadísticas del Sistema</h3>
-                            <p>Información estadística en desarrollo...</p>
+                        <div class="statistics-content">
+                            <div class="stat-card">
+                                <h3>📊 Estadísticas del Sistema</h3>
+                                <div class="stat-item">
+                                    <span>Usuario conectado:</span>
+                                    <strong id="current-username">-</strong>
+                                </div>
+                            </div>
+
+                            <div class="logout-card">
+                                <h3>🔐 Sesión</h3>
+                                <p>Puedes cerrar tu sesión aquí</p>
+                                <button id="logout-btn" class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1423,8 +1518,56 @@
             openModal('modal-mascota');
         }
 
+        // ==================== AUTH FUNCTIONS ====================
+        async function logout() {
+            mostrarConfirmacion(
+                '¿Estás seguro de que deseas cerrar sesión?',
+                async () => {
+                    try {
+                        await fetch(`${API_BASE_URL}/api/logout`, {
+                            method: 'POST',
+                            credentials: 'include'
+                        });
+
+                        localStorage.removeItem('auth_token');
+                        localStorage.removeItem('username');
+                        
+                        mostrarNotificacion('Sesión cerrada', '✓ Hasta luego');
+                        
+                        setTimeout(() => {
+                            window.location.href = '/login.html';
+                        }, 1000);
+                    } catch (error) {
+                        console.error('Error:', error);
+                        mostrarNotificacion('Error al cerrar sesión');
+                    }
+                },
+                '🔐 Cerrar Sesión'
+            );
+        }
+
+        async function verificarAutenticacion() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/user`, {
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    document.getElementById('current-username').textContent = userData.username;
+                } else {
+                    // No está autenticado
+                    window.location.href = '/login.html';
+                }
+            } catch (error) {
+                console.error('Error verificando autenticación:', error);
+                window.location.href = '/login.html';
+            }
+        }
+
         // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', () => {
+            verificarAutenticacion();
             cargarClientes();
         });
     </script>
