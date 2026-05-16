@@ -1296,6 +1296,11 @@
                 const response = await fetch(`${API_BASE_URL}/consultas/${consultaId}`);
                 const consulta = await response.json();
                 
+                if (!consulta.mascota || !consulta.mascota.id) {
+                    mostrarNotificacion('Error: La cita no tiene una mascota asociada válida');
+                    return;
+                }
+                
                 document.getElementById('consulta-id').value = consulta.id;
                 document.getElementById('consulta-mascota-id').value = consulta.mascota.id;
                 document.getElementById('consulta-fecha').value = consulta.fechaHora;
@@ -1309,10 +1314,13 @@
                 
                 document.getElementById('modal-consulta-title').textContent = 'Editar Cita Médica';
                 document.getElementById('submit-consulta-btn').textContent = 'Actualizar Cita';
+                
+                // Ir directamente al paso 3 cuando se edita
+                mostrarPasoConsulta(3);
                 openModal('modal-consulta');
             } catch (error) {
                 console.error('Error:', error);
-                alert('Error al cargar la cita');
+                mostrarNotificacion('Error al cargar la cita');
             }
         }
 
@@ -1378,7 +1386,7 @@
                     ${consultas.map(c => `
                         <tr>
                             <td>${new Date(c.fechaHora).toLocaleString('es-ES')}</td>
-                            <td>${c.mascota.nombre}</td>
+                            <td>${c.mascota ? c.mascota.nombre : 'Sin mascota'}</td>
                             <td>${c.motivo}</td>
                             <td><span class="status-badge status-${c.estado.toLowerCase()}">${c.estado}</span></td>
                             <td>

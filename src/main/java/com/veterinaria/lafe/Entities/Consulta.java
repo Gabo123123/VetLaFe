@@ -42,8 +42,7 @@ public class Consulta {
     @Column(name = "receta", columnDefinition = "TEXT")
     private String receta;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "mascota_id", nullable = false)
-    @JsonIgnore
     private Mascota mascota;
 }
