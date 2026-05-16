@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
+import org.springframework.security.config.Customizer;
 import java.util.Arrays;
 
 @Configuration
@@ -26,22 +26,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors().and()
-            .csrf().disable()
+            .cors(Customizer.withDefaults())
+            .csrf(Customizer.withDefaults())
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/", "/login.html", "/login", "/api/login").permitAll()
                 .requestMatchers("/static/**", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
             )
-            .httpBasic()
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-            .and()
-            .logout()
-            .logoutUrl("/api/logout")
-            .logoutSuccessUrl("/login.html")
-            .invalidateHttpSession(true);
+            .httpBasic(Customizer.withDefaults())
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            )
+            .logout(logout -> logout
+                .logoutUrl("/api/logout")
+                .logoutSuccessUrl("/login.html")
+                .invalidateHttpSession(true)
+            );
 
         return http.build();
     }
@@ -49,10 +49,10 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user = User.builder()
-            .username("veterinaria")
-            .password(passwordEncoder().encode("lafe2024"))
-            .roles("USER")
-            .build();
+                .username("veterinaria")
+                .password(passwordEncoder().encode("lafe2024"))
+                .roles("USER")
+                .build();
 
         return new InMemoryUserDetailsManager(user);
     }
@@ -69,7 +69,7 @@ public class SecurityConfig {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
