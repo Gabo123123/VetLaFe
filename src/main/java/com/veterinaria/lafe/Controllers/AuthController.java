@@ -12,6 +12,30 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class AuthController {
     
+    @PostMapping("/register")
+    public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String password = request.get("password");
+        String email = request.get("email");
+        
+        if (username == null || username.trim().isEmpty() || 
+            password == null || password.trim().isEmpty()) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Usuario y contraseña son requeridos");
+            return ResponseEntity.badRequest().body(response);
+        }
+        
+        // Por ahora solo retornamos un mensaje de éxito
+        // En una aplicación real, aquí guardarías el usuario en la BD
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Usuario registrado exitosamente");
+        response.put("username", username);
+        response.put("email", email != null ? email : "");
+        return ResponseEntity.ok(response);
+    }
+    
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
