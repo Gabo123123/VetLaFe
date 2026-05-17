@@ -251,6 +251,11 @@
             if (params.get('error') === 'true') {
                 document.getElementById('errorMessage').textContent = 'Usuario o contraseña incorrectos';
                 document.getElementById('errorMessage').classList.add('show');
+                
+                // Re-habilitar botón si hay error
+                loginBtn.disabled = false;
+                btnText.style.display = 'block';
+                spinner.style.display = 'none';
             }
         });
 
@@ -261,22 +266,6 @@
 
         document.getElementById('password').addEventListener('input', () => {
             errorMessage.classList.remove('show');
-        });
-
-        // Verificar si ya está autenticado
-        window.addEventListener('load', async () => {
-            try {
-                const response = await fetch('http://localhost:8080/api/user', {
-                    credentials: 'include'
-                });
-                
-                if (response.ok) {
-                    // Ya está autenticado, redirigir al dashboard
-                    window.location.href = '/index.html';
-                }
-            } catch (error) {
-                // No hay sesión activa, mantener en login
-            }
         });
     </script>
 </body>

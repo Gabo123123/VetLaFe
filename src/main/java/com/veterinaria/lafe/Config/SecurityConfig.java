@@ -30,7 +30,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/", "/login.html", "/login", "/api/login").permitAll()
                 .requestMatchers("/static/**", "/css/**", "/js/**").permitAll()
-                .requestMatchers("/index.html", "/api/user", "/api/logout", "/clientes", "/mascotas", "/consultas", "/api/**").authenticated()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
