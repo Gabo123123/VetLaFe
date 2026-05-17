@@ -192,7 +192,7 @@
             <p>Sistema de Gestión Veterinaria</p>
         </div>
 
-        <form id="loginForm">
+        <form id="loginForm" method="POST" action="/perform_login">
             <div class="error-message" id="errorMessage"></div>
 
             <div class="form-group">
@@ -238,73 +238,28 @@
         const loginBtn = document.getElementById('loginBtn');
         const btnText = document.getElementById('btnText');
         const spinner = document.getElementById('spinner');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
 
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await login();
-        });
-
-        async function login() {
-            const username = usernameInput.value;
-            const password = passwordInput.value;
-
-            if (!username || !password) {
-                mostrarError('Por favor completa todos los campos');
-                return;
-            }
-
+        loginForm.addEventListener('submit', (e) => {
             loginBtn.disabled = true;
             btnText.style.display = 'none';
             spinner.style.display = 'block';
+        });
 
-            try {
-                const credentials = btoa(`${username}:${password}`);
-                
-                const response = await fetch('http://localhost:8080/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Basic ${credentials}`,
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    localStorage.setItem('auth_token', credentials);
-                    localStorage.setItem('username', username);
-                    errorMessage.classList.remove('show');
-                    
-                    // Redirigir al dashboard
-                    setTimeout(() => {
-                        window.location.href = '/index.html';
-                    }, 500);
-                } else {
-                    mostrarError('Usuario o contraseña incorrectos');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                mostrarError('Error al conectar con el servidor');
-            } finally {
-                loginBtn.disabled = false;
-                btnText.style.display = 'block';
-                spinner.style.display = 'none';
+        // Verificar si vino con error
+        window.addEventListener('load', () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('error') === 'true') {
+                document.getElementById('errorMessage').textContent = 'Usuario o contraseña incorrectos';
+                document.getElementById('errorMessage').classList.add('show');
             }
-        }
-
-        function mostrarError(mensaje) {
-            errorMessage.textContent = mensaje;
-            errorMessage.classList.add('show');
-        }
+        });
 
         // Limpiar error cuando el usuario escribe
-        usernameInput.addEventListener('input', () => {
+        document.getElementById('username').addEventListener('input', () => {
             errorMessage.classList.remove('show');
         });
 
-        passwordInput.addEventListener('input', () => {
+        document.getElementById('password').addEventListener('input', () => {
             errorMessage.classList.remove('show');
         });
 

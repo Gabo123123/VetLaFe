@@ -26,13 +26,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .cors(Customizer.withDefaults())
-            .csrf(Customizer.withDefaults())
+            .csrf().disable()
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/", "/login.html", "/login", "/api/login").permitAll()
                 .requestMatchers("/static/**", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/index.html", "/api/user", "/api/logout", "/clientes", "/mascotas", "/consultas", "/api/**").authenticated()
                 .anyRequest().authenticated()
             )
-            .httpBasic(Customizer.withDefaults())
+            .formLogin(form -> form
+                .loginPage("/login.html")
+                .loginProcessingUrl("/perform_login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/index.html", true)
+                .failureUrl("/login.html?error=true")
+                .permitAll()
+            )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
             )

@@ -1556,7 +1556,7 @@
                     const userData = await response.json();
                     document.getElementById('current-username').textContent = userData.username;
                 } else {
-                    // No está autenticado
+                    // No está autenticado, redirigir a login
                     window.location.href = '/login.html';
                 }
             } catch (error) {
