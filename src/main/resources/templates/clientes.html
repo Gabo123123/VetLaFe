@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes y Mascotas - VetLaFe</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/cards.css">
+    <link rel="stylesheet" href="/css/modals.css">
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h1>🐾 LAFE VET</h1>
+            
+            <div class="sidebar-section">
+                <h3>Directorio</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/clientes.html" class="menu-link active">📋 Clientes y Mascotas</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Consultas</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/consultas.html" class="menu-link">🏥 Citas y Fichas Médicas</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Administración</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/estadisticas.html" class="menu-link">📊 Estadísticas</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <h2>Clientes y Mascotas</h2>
+                <div class="header-actions">
+                    <button id="btn-new-client" class="action-btn">➕ Nuevo Cliente</button>
+                </div>
+            </div>
+
+            <!-- CONTENT AREA -->
+            <div class="content">
+                <div id="clientes-container" class="clientes-container">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Cargando clientes...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALES -->
+    
+    <!-- MODAL CLIENTE -->
+    <div id="modal-cliente" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-cliente-title">Nuevo Cliente</h3>
+                <button class="close-btn" onclick="closeModal('modal-cliente')">&times;</button>
+            </div>
+            <form id="form-cliente">
+                <div class="form-group">
+                    <label for="cliente-dni">DNI/Cédula:</label>
+                    <input type="text" id="cliente-dni" required placeholder="Ej: 12345678">
+                </div>
+                <div class="form-group">
+                    <label for="cliente-nombre">Nombre Completo:</label>
+                    <input type="text" id="cliente-nombre" required placeholder="Ej: Juan Pérez García">
+                </div>
+                <div class="form-group">
+                    <label for="cliente-telefono">Teléfono:</label>
+                    <input type="tel" id="cliente-telefono" placeholder="Ej: 555-1234567">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeModal('modal-cliente')">Cancelar</button>
+                    <button type="submit" class="submit-btn">Guardar Cliente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL MASCOTA -->
+    <div id="modal-mascota" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nueva Mascota</h3>
+                <button class="close-btn" onclick="closeModal('modal-mascota')">&times;</button>
+            </div>
+            <form id="form-mascota">
+                <input type="hidden" id="mascota-cliente-id">
+                <div class="form-group">
+                    <label for="mascota-nombre">Nombre de la Mascota:</label>
+                    <input type="text" id="mascota-nombre" required placeholder="Ej: Firulais">
+                </div>
+                <div class="form-group">
+                    <label for="mascota-raza">Raza:</label>
+                    <input type="text" id="mascota-raza" placeholder="Ej: Labrador Retriever">
+                </div>
+                <div class="form-group">
+                    <label for="mascota-edad">Edad (años):</label>
+                    <input type="number" id="mascota-edad" min="0" placeholder="Ej: 3">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeModal('modal-mascota')">Cancelar</button>
+                    <button type="submit" class="submit-btn">Guardar Mascota</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div class="modal" id="modal-confirmation">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="confirmation-title">Confirmar</h3>
+                <button class="close-btn" onclick="closeConfirmation()">&times;</button>
+            </div>
+            <div id="confirmation-message" style="padding: 20px; text-align: center; min-height: 60px;"></div>
+            <div class="form-actions" style="gap: 10px;">
+                <button type="button" class="cancel-btn" onclick="closeConfirmation()">Cancelar</button>
+                <button type="button" class="submit-btn" id="confirmation-btn" onclick="confirmAction()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE NOTIFICACIÓN -->
+    <div class="modal" id="modal-notification">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="notification-title">Notificación</h3>
+                <button class="close-btn" onclick="closeNotification()">&times;</button>
+            </div>
+            <div id="notification-message" style="padding: 20px; text-align: center; min-height: 60px;"></div>
+            <div class="form-actions">
+                <button type="button" class="submit-btn" onclick="closeNotification()" style="width: 100%;">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="/js/config.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/ui-builders.js"></script>
+    <script src="/js/clientes.js"></script>
+</body>
+</html>

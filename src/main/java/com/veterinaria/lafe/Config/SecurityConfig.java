@@ -30,6 +30,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/", "/login.html", "/login", "/api/login").permitAll()
                 .requestMatchers("/static/**", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/templates/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -37,7 +38,7 @@ public class SecurityConfig {
                 .loginProcessingUrl("/perform_login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/index.html", true)
+                .defaultSuccessUrl("/templates/clientes.html", true)
                 .failureUrl("/login.html?error=true")
                 .permitAll()
             )

@@ -1,0 +1,325 @@
+/* ==================== TABLES ==================== */
+.consultations-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.consultations-table thead {
+    background-color: #667eea;
+    color: white;
+}
+
+.consultations-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.consultations-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.consultations-table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.consultations-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.consultations-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.table-actions button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background-color: #667eea;
+    color: white;
+}
+
+.table-actions button:hover {
+    background-color: #764ba2;
+    transform: translateY(-1px);
+}
+
+.table-actions button.delete {
+    background-color: #e74c3c;
+}
+
+.table-actions button.delete:hover {
+    background-color: #c0392b;
+}
+
+/* ==================== CLIENT CARDS ==================== */
+.client-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #667eea;
+}
+
+.client-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.client-info h3 {
+    color: #667eea;
+    margin-bottom: 8px;
+}
+
+.client-info p {
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.client-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.client-actions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background-color: #667eea;
+    color: white;
+}
+
+.client-actions button:hover {
+    background-color: #764ba2;
+}
+
+.client-actions button.delete {
+    background-color: #e74c3c;
+}
+
+.client-actions button.delete:hover {
+    background-color: #c0392b;
+}
+
+/* ==================== PETS SECTION ==================== */
+.pets-section {
+    margin-top: 15px;
+}
+
+.pets-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.pets-header h4 {
+    color: #333;
+    font-size: 14px;
+}
+
+.pets-header button {
+    padding: 6px 12px;
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.pets-header button:hover {
+    background-color: #764ba2;
+}
+
+.pet-item {
+    background-color: #f8f9fa;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 3px solid #764ba2;
+}
+
+.pet-item:last-child {
+    margin-bottom: 0;
+}
+
+.pet-info p {
+    font-size: 13px;
+    color: #666;
+    margin: 3px 0;
+}
+
+.pet-info p strong {
+    color: #333;
+}
+
+.pet-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.pet-actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background-color: #667eea;
+    color: white;
+}
+
+.pet-actions button:hover {
+    background-color: #764ba2;
+}
+
+.pet-actions button.delete {
+    background-color: #e74c3c;
+}
+
+.pet-actions button.delete:hover {
+    background-color: #c0392b;
+}
+
+/* ==================== STATISTICS CARDS ==================== */
+.statistics-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.stat-card, .logout-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #667eea;
+}
+
+.logout-card {
+    border-left-color: #e74c3c;
+}
+
+.stat-card h3, .logout-card h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.logout-card h3 {
+    color: #e74c3c;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-item span {
+    color: #999;
+    font-size: 14px;
+}
+
+.stat-item strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.logout-card p {
+    color: #999;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.logout-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.logout-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .statistics-content {
+        grid-template-columns: 1fr;
+    }
+
+    .consultations-table {
+        font-size: 12px;
+    }
+
+    .consultations-table th,
+    .consultations-table td {
+        padding: 8px;
+    }
+
+    .client-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .client-actions {
+        width: 100%;
+    }
+
+    .client-actions button {
+        flex: 1;
+    }
+}

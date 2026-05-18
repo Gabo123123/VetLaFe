@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas - VetLaFe</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/statistics.css">
+    <link rel="stylesheet" href="/css/modals.css">
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h1>🐾 LAFE VET</h1>
+            
+            <div class="sidebar-section">
+                <h3>Directorio</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/clientes.html" class="menu-link">📋 Clientes y Mascotas</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Consultas</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/consultas.html" class="menu-link">🏥 Citas y Fichas Médicas</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Administración</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/estadisticas.html" class="menu-link active">📊 Estadísticas</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <h2>Estadísticas y Sesión</h2>
+                <div class="header-actions">
+                </div>
+            </div>
+
+            <!-- CONTENT AREA -->
+            <div class="content">
+                <div id="estadisticas-container" class="estadisticas-container">
+                    <div class="statistics-content">
+                        <!-- Información del usuario -->
+                        <div class="user-info-box">
+                            <h3>👤 Información del Usuario</h3>
+                            <div class="user-info-item">
+                                <span class="user-info-label">Usuario conectado:</span>
+                                <span class="user-info-value" id="current-username">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Controles de sesión -->
+                        <div class="session-controls">
+                            <h3>🔐 Controles de Sesión</h3>
+                            <p>Puedes cerrar tu sesión aquí. Se eliminarán todos los datos de la sesión actual.</p>
+                            <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                        </div>
+
+                        <!-- Estadísticas del sistema -->
+                        <div class="stat-grid" id="stat-grid">
+                            <div class="stat-box">
+                                <div class="stat-label">Total de Clientes</div>
+                                <div class="stat-value" id="stat-clientes">-</div>
+                                <div class="stat-description">Clientes registrados en el sistema</div>
+                            </div>
+
+                            <div class="stat-box">
+                                <div class="stat-label">Total de Mascotas</div>
+                                <div class="stat-value" id="stat-mascotas">-</div>
+                                <div class="stat-description">Mascotas en el registro</div>
+                            </div>
+
+                            <div class="stat-box">
+                                <div class="stat-label">Total de Citas</div>
+                                <div class="stat-value" id="stat-consultas">-</div>
+                                <div class="stat-description">Citas registradas</div>
+                            </div>
+
+                            <div class="stat-box">
+                                <div class="stat-label">Citas Pendientes</div>
+                                <div class="stat-value" id="stat-pendientes">-</div>
+                                <div class="stat-description">Citas por atender</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE NOTIFICACIÓN -->
+    <div class="modal" id="modal-notification">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="notification-title">Notificación</h3>
+                <button class="close-btn" onclick="closeNotification()">&times;</button>
+            </div>
+            <div id="notification-message" style="padding: 20px; text-align: center; min-height: 60px;"></div>
+            <div class="form-actions">
+                <button type="button" class="submit-btn" onclick="closeNotification()" style="width: 100%;">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="/js/config.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/estadisticas.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión Veterinaria - LAFE</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/cards.css">
+    <link rel="stylesheet" href="/css/modals.css">
+    <link rel="stylesheet" href="/css/tables.css">
+    <link rel="stylesheet" href="/css/statistics.css">
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h1>🐾 LAFE VET</h1>
+            
+            <div class="sidebar-section">
+                <h3>Directorio</h3>
+                <ul class="sidebar-menu">
+                    <li><button class="menu-btn active" data-section="clientes">Clientes y Mascotas</button></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Consultas</h3>
+                <ul class="sidebar-menu">
+                    <li><button class="menu-btn" data-section="consultas">Citas y Fichas Médicas</button></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Administración</h3>
+                <ul class="sidebar-menu">
+                    <li><button class="menu-btn" data-section="estadisticas">Estadísticas</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <h2 id="page-title">Clientes y Mascotas</h2>
+                <div class="header-actions">
+                    <button id="btn-new-client" class="action-btn">➕ Nuevo Cliente</button>
+                </div>
+            </div>
+
+            <!-- CONTENT AREA -->
+            <div class="content">
+                <!-- CLIENTES SECTION -->
+                <div class="content-section active" id="clientes-section">
+                    <div id="clientes-container" class="clientes-container">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Cargando clientes...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONSULTAS SECTION -->
+                <div class="content-section" id="consultas-section">
+                    <div class="header-actions" style="margin-bottom: 20px;">
+                        <button id="btn-new-consulta" class="action-btn">➕ Nueva Cita</button>
+                    </div>
+                    <div id="consultas-container" class="consultas-container">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            <p>Cargando citas...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ESTADISTICAS SECTION -->
+                <div class="content-section" id="estadisticas-section">
+                    <div id="estadisticas-container" class="estadisticas-container">
+                        <div class="statistics-content">
+                            <div class="stat-card">
+                                <h3>📊 Estadísticas del Sistema</h3>
+                                <div class="stat-item">
+                                    <span>Usuario conectado:</span>
+                                    <strong id="current-username">-</strong>
+                                </div>
+                            </div>
+
+                            <div class="logout-card">
+                                <h3>🔐 Sesión</h3>
+                                <p>Puedes cerrar tu sesión aquí</p>
+                                <button id="logout-btn" class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="modal-cliente" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-cliente-title">Nuevo Cliente</h3>
+                <button class="close-btn" onclick="closeModal('modal-cliente')">&times;</button>
+            </div>
+            <form id="form-cliente">
+                <div class="form-group">
+                    <label for="cliente-dni">DNI/Cédula:</label>
+                    <input type="text" id="cliente-dni" required placeholder="Ej: 12345678">
+                </div>
+                <div class="form-group">
+                    <label for="cliente-nombre">Nombre Completo:</label>
+                    <input type="text" id="cliente-nombre" required placeholder="Ej: Juan Pérez García">
+                </div>
+                <div class="form-group">
+                    <label for="cliente-telefono">Teléfono:</label>
+                    <input type="tel" id="cliente-telefono" placeholder="Ej: 555-1234567">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeModal('modal-cliente')">Cancelar</button>
+                    <button type="submit" class="submit-btn">Guardar Cliente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-mascota" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nueva Mascota</h3>
+                <button class="close-btn" onclick="closeModal('modal-mascota')">&times;</button>
+            </div>
+            <form id="form-mascota">
+                <input type="hidden" id="mascota-cliente-id">
+                <div class="form-group">
+                    <label for="mascota-nombre">Nombre de la Mascota:</label>
+                    <input type="text" id="mascota-nombre" required placeholder="Ej: Firulais">
+                </div>
+                <div class="form-group">
+                    <label for="mascota-raza">Raza:</label>
+                    <input type="text" id="mascota-raza" placeholder="Ej: Labrador Retriever">
+                </div>
+                <div class="form-group">
+                    <label for="mascota-edad">Edad (años):</label>
+                    <input type="number" id="mascota-edad" min="0" placeholder="Ej: 3">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeModal('modal-mascota')">Cancelar</button>
+                    <button type="submit" class="submit-btn">Guardar Mascota</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-consulta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-consulta-title">Nueva Cita Médica</h3>
+                <button class="close-btn" onclick="closeModal('modal-consulta')">&times;</button>
+            </div>
+            
+            <!-- PASO 1: Seleccionar Cliente -->
+            <div id="consulta-step1" class="consulta-step active">
+                <div class="form-group">
+                    <label for="consulta-cliente-select">Selecciona un Cliente:</label>
+                    <select id="consulta-cliente-select" required>
+                        <option value="">-- Cargando clientes --</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeModal('modal-consulta')">Cancelar</button>
+                    <button type="button" class="submit-btn" onclick="irAlPaso2Consulta()">Siguiente</button>
+                </div>
+            </div>
+
+            <!-- PASO 2: Seleccionar Mascota -->
+            <div id="consulta-step2" class="consulta-step">
+                <div class="form-group">
+                    <label for="consulta-mascota-select">Selecciona una Mascota:</label>
+                    <select id="consulta-mascota-select" required>
+                        <option value="">-- Selecciona una mascota --</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="regresarAlPaso1Consulta()">Atrás</button>
+                    <button type="button" class="submit-btn" onclick="irAlPaso3Consulta()">Siguiente</button>
+                </div>
+            </div>
+
+            <!-- PASO 3: Datos de la Cita -->
+            <div id="consulta-step3" class="consulta-step">
+                <form id="form-consulta">
+                    <input type="hidden" id="consulta-mascota-id">
+                    <input type="hidden" id="consulta-id">
+                    <div class="form-group">
+                        <label for="consulta-fecha">Fecha y Hora:</label>
+                        <input type="datetime-local" id="consulta-fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="consulta-motivo">Motivo de la Consulta:</label>
+                        <input type="text" id="consulta-motivo" required placeholder="Ej: Revisión de rutina">
+                    </div>
+                    <div class="form-group">
+                        <label for="consulta-peso">Peso (kg):</label>
+                        <input type="number" id="consulta-peso" step="0.1" placeholder="Ej: 25.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="consulta-temperatura">Temperatura (°C):</label>
+                        <input type="number" id="consulta-temperatura" step="0.1" placeholder="Ej: 38.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="consulta-sintomas">Síntomas:</label>
+                        <textarea id="consulta-sintomas" placeholder="Describe los síntomas observados..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="consulta-diagnostico">Diagnóstico:</label>
+                        <textarea id="consulta-diagnostico" placeholder="Diagnóstico del veterinario..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="consulta-receta">Receta/Tratamiento:</label>
+                        <textarea id="consulta-receta" placeholder="Medicamentos y recomendaciones..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="consulta-estado">Estado:</label>
+                        <select id="consulta-estado" required>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Atendido">Atendido</option>
+                            <option value="Cancelado">Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" onclick="regresarAlPaso2Consulta()">Atrás</button>
+                        <button type="submit" class="submit-btn" id="submit-consulta-btn">Guardar Cita</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN PERSONALIZADO -->
+    <div class="modal" id="modal-confirmation">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="confirmation-title">Confirmar</h3>
+                <button class="close-btn" onclick="closeConfirmation()">&times;</button>
+            </div>
+            <div id="confirmation-message" style="padding: 20px; text-align: center; min-height: 60px;">
+            </div>
+            <div class="form-actions" style="gap: 10px;">
+                <button type="button" class="cancel-btn" onclick="closeConfirmation()">Cancelar</button>
+                <button type="button" class="submit-btn" id="confirmation-btn" onclick="confirmAction()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE NOTIFICACIÓN PERSONALIZADO -->
+    <div class="modal" id="modal-notification">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="notification-title">Notificación</h3>
+                <button class="close-btn" onclick="closeNotification()">&times;</button>
+            </div>
+            <div id="notification-message" style="padding: 20px; text-align: center; min-height: 60px;">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="submit-btn" onclick="closeNotification()" style="width: 100%;">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="/js/config.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/ui-builders.js"></script>
+    <script src="/js/consultas.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

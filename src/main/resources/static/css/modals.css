@@ -1,0 +1,135 @@
+/* ==================== MODAL STYLES ==================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 15px;
+}
+
+.modal-header h3 {
+    color: #667eea;
+    font-size: 22px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #667eea;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #764ba2;
+}
+
+/* ==================== CONSULTA STEPS ==================== */
+.consulta-step {
+    display: none;
+}
+
+.consulta-step.active {
+    display: block;
+}
+
+/* ==================== STATUS BADGES ==================== */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.status-badge.status-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.status-atendido {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.status-cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* ==================== CONFIRMATION/NOTIFICATION MODALS ==================== */
+.modal-content[style*="max-width: 400px"] {
+    max-width: 400px;
+}
+
+#confirmation-message,
+#notification-message {
+    padding: 20px;
+    text-align: center;
+    min-height: 60px;
+    line-height: 1.6;
+}
+
+#confirmation-title,
+#notification-title {
+    color: #667eea;
+}
+
+/* ==================== RESPONSIVE MODALS ==================== */
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .modal-header h3 {
+        font-size: 18px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* Evita zoom en móvil */
+    }
+}

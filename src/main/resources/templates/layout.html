@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">VetLaFe - Sistema de Gestión Veterinaria</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/cards.css">
+    <link rel="stylesheet" href="/css/modals.css">
+    <link rel="stylesheet" href="/css/tables.css">
+    <link rel="stylesheet" href="/css/statistics.css">
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h1>🐾 LAFE VET</h1>
+            
+            <div class="sidebar-section">
+                <h3>Directorio</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/clientes.html" class="menu-link">📋 Clientes y Mascotas</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Consultas</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/consultas.html" class="menu-link">🏥 Citas y Fichas Médicas</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Administración</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="/templates/estadisticas.html" class="menu-link">📊 Estadísticas</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- HEADER -->
+            <div class="header">
+                <h2 id="page-header">Bienvenido a VetLaFe</h2>
+                <div class="header-actions" id="header-actions">
+                    <!-- Acciones específicas de cada página irán aquí -->
+                </div>
+            </div>
+
+            <!-- CONTENT AREA -->
+            <div class="content" id="page-content">
+                <!-- Contenido cargado dinámicamente -->
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Cargando contenido...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS (compartidos) -->
+    
+    <!-- MODAL DE CONFIRMACIÓN PERSONALIZADO -->
+    <div class="modal" id="modal-confirmation">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="confirmation-title">Confirmar</h3>
+                <button class="close-btn" onclick="closeConfirmation()">&times;</button>
+            </div>
+            <div id="confirmation-message" style="padding: 20px; text-align: center; min-height: 60px;">
+            </div>
+            <div class="form-actions" style="gap: 10px;">
+                <button type="button" class="cancel-btn" onclick="closeConfirmation()">Cancelar</button>
+                <button type="button" class="submit-btn" id="confirmation-btn" onclick="confirmAction()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE NOTIFICACIÓN PERSONALIZADO -->
+    <div class="modal" id="modal-notification">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3 id="notification-title">Notificación</h3>
+                <button class="close-btn" onclick="closeNotification()">&times;</button>
+            </div>
+            <div id="notification-message" style="padding: 20px; text-align: center; min-height: 60px;">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="submit-btn" onclick="closeNotification()" style="width: 100%;">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="/js/config.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/ui-builders.js"></script>
+    <script src="/js/layout.js"></script>
+</body>
+</html>
