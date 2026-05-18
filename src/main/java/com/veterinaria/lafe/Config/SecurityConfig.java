@@ -34,12 +34,12 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login.html")
+                .loginPage("/templates/login.html")
                 .loginProcessingUrl("/perform_login")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/login.html?error=true")
+                .failureUrl("/templates/login.html?error=true")
                 .permitAll()
             )
             .sessionManagement(session -> session
@@ -47,7 +47,7 @@ public class SecurityConfig {
             )
             .logout(logout -> logout
                 .logoutUrl("/api/logout")
-                .logoutSuccessUrl("/login.html")
+                .logoutSuccessUrl("/templates/login.html")
                 .invalidateHttpSession(true)
             );
 
